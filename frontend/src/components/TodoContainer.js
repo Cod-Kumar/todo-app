@@ -20,6 +20,11 @@ const TodoContainer = () =>{
         setInputText("");
     }
 
+    React.useEffect(() => {
+        fetch('http://127.0.0.1:8000/api/tasks')
+            .then(response => console.log(response));
+    }, [])
+
     return(
         <div>
             <div id="todo-input">
