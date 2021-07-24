@@ -8,22 +8,44 @@ const TodoContainer = () =>{
     const [todos, setTodos] = useState([]);
 
     const inputHandler = (e) => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
         setInputText(e.target.value);
     }
 
     const submitHandler = (e) => {
         e.preventDefault();
-        setTodos([
-            ...todos, {text: inputText, completed: false, id: Math.random() *1000}
-        ]);
+        // setTodos([
+        //     ...todos, {text: inputText, completed: false, id: Math.random() *1000}
+        // ]);
         setInputText("");
+
+        let request = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                    title: e.target.value,
+                    description: e.target.value
+                })
+        };
+
+        fetch('http://127.0.0.1:3000/api/task/create', request)
+            .then(response => response.json)
+            .then(response => console.log(response));
+        
     }
 
-    React.useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/tasks')
-            .then(response => console.log(response));
-    }, [])
+    React.useEffect( async () => {
+        await fetch('http://127.0.0.1:3000/api/tasks')
+            .then(response => {
+                if(response.ok)
+                    return response.json();
+                else 
+                    throw response;
+            })
+            .then(data => {
+                setTodos(data.data);
+            });
+    }, []);
 
     return(
         <div>
@@ -33,13 +55,13 @@ const TodoContainer = () =>{
                     
                     <label htmlFor="todo-inp" className="todo-add">
                         <IoIosAdd className="todo-i"/>
-                        <input type="submit" name="todo-inp" onClick={ submitHandler } value=" "/> 
+                        <input type="submit" name="todo-inp" onClick={ submitHandler } value=""/> 
                     </label>
                 </form>
             </div>
 
             {todos.map((todolist) =>(
-                <Todolist key={todolist.id} text={todolist.text}/>
+                <Todolist key={todolist.id} text={todolist.title}/>
             ))}
             
         </div>
