@@ -18,6 +18,6 @@ const Task = connection.define('Task', {
     },
 });
 
-// connection.sync();
+connection.sync();
 
 module.exports = Task;

@@ -1,6 +1,6 @@
 const sequelize = require('sequelize');
 
-const connection = new sequelize('todo_app', 'root', '', {
+const connection = new sequelize('todo_app', 'root', 'root', {
 	host: 'localhost',
 	dialect: 'mysql'
 });

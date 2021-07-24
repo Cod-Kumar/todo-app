@@ -12,8 +12,6 @@ module.exports.index = async (req, res) => {
 
 // error
 module.exports.create = async (req, res) => {
-    res.send(req);
-    return;
     if(!req.body.title) {
         req.status(400).send({
             message: 'Title is requried'
