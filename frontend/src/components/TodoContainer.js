@@ -6,13 +6,18 @@ const TodoContainer = () =>{
 
     const [inputText, setInputText] = useState("");
     const [todos, setTodos] = useState([]);
+    const [task, setTask] = useState({});
 
     const inputHandler = (e) => {
         // console.log(e.target.value);
         setInputText(e.target.value);
+        setTask({
+            title: e.target.value,
+            description: e.target.value
+        })
     }
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
         // setTodos([
         //     ...todos, {text: inputText, completed: false, id: Math.random() *1000}
@@ -22,15 +27,16 @@ const TodoContainer = () =>{
         let request = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                    title: e.target.value,
-                    description: e.target.value
-                })
+            body: JSON.stringify(task)
         };
 
-        fetch('http://127.0.0.1:3000/api/task/create', request)
-            .then(response => response.json)
-            .then(response => console.log(response));
+        await fetch('http://127.0.0.1:3000/api/task/create', request)
+                .then(response => response.json())
+                .then(response => {
+                    todos.push(response)
+                    setTodos(todos)
+                    console.log(todos)
+                });
         
     }
 
