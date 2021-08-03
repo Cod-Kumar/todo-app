@@ -3,6 +3,7 @@ const express = require('express');
 router = express.Router();
 
 router.get('/tasks', todoController.index);
-router.post('/task/create', todoController.create);
+router.post('/tasks', todoController.create);
+router.put('/tasks', todoController.update);
 
 module.exports = router;
