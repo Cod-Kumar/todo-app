@@ -47,31 +47,35 @@ module.exports.update = async (req, res) => {
         description : req.body.description
     };
 
-    Task.update(task, {where: {id: req.body.id}})
-        .then((result) => {
-            if(!result)
-                res.status(404).send({'message': 'Task Not Found'});
+    await Task.update(task, {where: {id: req.body.id}})
+            .then((result) => {
+                if(!result[0])
+                    res.status(404).send({'message': 'Task Not Found'});
 
-            res.send({'message': 'Updated Successfully' + result})
-        })
-        .error((err) => {
-            res.status(500).send({'message': 'Error Occurred - ' + err})
-        })
-
-    res.send(newTask)
+                res.send({'message': 'Updated Successfully' + result})
+            })
+            .catch((err) => {
+                res.status(500).send({'message': 'Error Occurred - ' + err})
+            })
 }
 
 module.exports.delete = async (req, res) => {
-    if(!req.params.id) {
-        req.status(400).send({
+    if(!req.body.id) {
+        res.status(400).send({
             message: 'Id is required'
         });
         return;
     }
 
-    Task.delete({where: {id: req.params.id}})
-        .then((resutl) => res.send({'message': 'Deleted Successfully'}))
-        .error((err) => {
-            res.status(500).send({'message': 'Error Occurred - ' + err})
-        })
+
+    await Task.destroy({where: {id: req.body.id}})
+            .then((result) => {
+                if(!result)
+                    res.status(404).send({'message': 'Task Not Found'});
+
+                res.send({'message': 'Deleted Successfully'})
+            })
+            .catch((err) => {
+                res.status(500).send({'message': 'Error Occurred - ' + err})
+            })
 }
