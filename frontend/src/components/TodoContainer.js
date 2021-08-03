@@ -30,7 +30,7 @@ const TodoContainer = () =>{
             body: JSON.stringify(task)
         };
 
-        await fetch('http://127.0.0.1:3000/api/task/create', request)
+        await fetch('http://127.0.0.1:3000/api/tasks', request)
                 .then(response => response.json())
                 .then(response => {
                     todos.push(response)
