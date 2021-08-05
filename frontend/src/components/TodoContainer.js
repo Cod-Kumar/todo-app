@@ -42,19 +42,22 @@ const TodoContainer = () =>{
 
     React.useEffect( async () => {
         await fetch('http://127.0.0.1:3000/api/tasks')
-            .then(response => {
-                if(response.ok)
-                    return response.json();
-                else 
-                    throw response;
-            })
-            .then(data => {
-                setTodos(data.data);
+        .then(response => {
+            if(response.ok)
+            return response.json();
+            else 
+            throw response;
+        })
+        .then(data => {
+            setTodos(data.data);
             });
     }, []);
 
     return(
         <div>
+            <div className="todo-count">
+                <h3>You have {todos.length} Todos</h3>
+            </div>
             <div id="todo-input">
                 <form action="" className="col-lg-12">
                     <input type="text" value={ inputText } onChange={ inputHandler } placeholder="Write here.." className="todo-inp" required/>
