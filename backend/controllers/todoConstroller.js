@@ -12,8 +12,8 @@ module.exports.index = async (req, res) => {
 
 module.exports.create = async (req, res) => {
 
-    if(!req.body.title) {
-        req.status(400).send({
+    if(!req.body) {
+        res.status(400).send({
             message: 'Title is requried'
         });
         return;  
@@ -36,7 +36,7 @@ module.exports.create = async (req, res) => {
 module.exports.update = async (req, res) => {
 
     if(!req.body.title) {
-        req.status(400).send({
+        res.status(400).send({
             message: 'Title is requried'
         });
         return;
