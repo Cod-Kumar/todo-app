@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { IoIosAdd } from "react-icons/io";
 import Todolist from './Todolist.js'
+import axios from 'axios';
 
 const TodoContainer = () =>{
 
@@ -24,34 +25,53 @@ const TodoContainer = () =>{
         // ]);
         setInputText("");
 
-        let request = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(task)
-        };
+        // let request = {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(task)
+        // };
 
-        await fetch('http://127.0.0.1:3000/api/tasks', request)
-                .then(response => response.json())
-                .then(response => {
-                    todos.push(response)
-                    setTodos(todos)
-                    console.log(todos)
-                });
+        // await fetch('http://127.0.0.1:3001/api/tasks', request)
+        //         .then(response => response.json())
+        //         .then(response => {
+        //             getTasks();
+        //         });
+        
+        await axios.post('http://127.0.0.1:3001/api/tasks', task)
+                    .then((response) => {
+                        getTasks();
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
         
     }
 
-    React.useEffect( async () => {
-        await fetch('http://127.0.0.1:3000/api/tasks')
-        .then(response => {
-            if(response.ok)
-            return response.json();
-            else 
-            throw response;
-        })
-        .then(data => {
-            setTodos(data.data);
-            });
-    }, []);
+    // React.useEffect( async () => {
+    //     await fetch('http://127.0.0.1:3001/api/tasks')
+    //     .then(response => {
+    //         if(response.ok)
+    //         return response.json();
+    //         else 
+    //         throw response;
+    //     })
+    //     .then(data => {
+    //         setTodos(data.data);
+    //         });
+    // }, []);
+
+    const getTasks = async () => {
+        await axios.get('http://127.0.0.1:3001/api/tasks')
+                .then((response) => {
+                    setTodos(response.data.data)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+    }
+    
+    React.useEffect(getTasks, [])
+    
 
     return(
         <div>
