@@ -5,6 +5,6 @@ router = express.Router();
 router.get('/tasks', todoController.index);
 router.post('/tasks', todoController.create);
 router.put('/tasks', todoController.update);
-router.delete('/tasks', todoController.delete);
+router.delete('/task/:id', todoController.delete);
 
 module.exports = router;

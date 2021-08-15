@@ -31,13 +31,13 @@ const TodoContainer = () =>{
         //     body: JSON.stringify(task)
         // };
 
-        // await fetch('http://127.0.0.1:3001/api/tasks', request)
+        // await fetch('http://127.0.0.1:3000/api/tasks', request)
         //         .then(response => response.json())
         //         .then(response => {
         //             getTasks();
         //         });
         
-        await axios.post('http://127.0.0.1:3001/api/tasks', task)
+        await axios.post('http://127.0.0.1:3000/api/tasks', task)
                     .then((response) => {
                         getTasks();
                     })
@@ -47,8 +47,17 @@ const TodoContainer = () =>{
         
     }
 
+    const deleteHandler = async (e) => {
+        await axios.delete(`http://127.0.0.1:3000/api/task/${e.target.value}`)
+                .then((result) => {
+                    const newTodos = todos.filter((todo) => { return todo.id != e.target.value })
+                    setTodos(newTodos)
+                })
+                .catch((err) => console.log(err));
+    }
+
     // React.useEffect( async () => {
-    //     await fetch('http://127.0.0.1:3001/api/tasks')
+    //     await fetch('http://127.0.0.1:3000/api/tasks')
     //     .then(response => {
     //         if(response.ok)
     //         return response.json();
@@ -61,7 +70,7 @@ const TodoContainer = () =>{
     // }, []);
 
     const getTasks = async () => {
-        await axios.get('http://127.0.0.1:3001/api/tasks')
+        await axios.get('http://127.0.0.1:3000/api/tasks')
                 .then((response) => {
                     setTodos(response.data.data)
                 })
@@ -90,7 +99,7 @@ const TodoContainer = () =>{
             </div>
 
             {todos.map((todolist) =>(
-                <Todolist key={todolist.id} text={todolist.title}/>
+                <Todolist key={todolist.id} todo={todolist} deleteHandler={deleteHandler}/>
             ))}
             
         </div>

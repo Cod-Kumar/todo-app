@@ -30,6 +30,9 @@ body{
 .todo-count h3{
   font-size: 1.6rem;
 }
+.del-i{
+  pointer-events: none;
+}
 #todo-input{
   margin: 20px 0;
   font-family: 'Poppins', sans-serif;

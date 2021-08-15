@@ -60,7 +60,7 @@ module.exports.update = async (req, res) => {
 }
 
 module.exports.delete = async (req, res) => {
-    if(!req.body.id) {
+    if(!req.params.id) {
         res.status(400).send({
             message: 'Id is required'
         });
@@ -68,7 +68,7 @@ module.exports.delete = async (req, res) => {
     }
 
 
-    await Task.destroy({where: {id: req.body.id}})
+    await Task.destroy({where: {id: req.params.id}})
             .then((result) => {
                 if(!result)
                     res.status(404).send({'message': 'Task Not Found'});
