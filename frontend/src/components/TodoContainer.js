@@ -20,18 +20,6 @@ const TodoContainer = () =>{
     const submitHandler = async (e) => {
         e.preventDefault();
         setInputText("");
-
-        // let request = {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(task)
-        // };
-
-        // await fetch('http://127.0.0.1:3000/api/tasks', request)
-        //         .then(response => response.json())
-        //         .then(response => {
-        //             getTasks();
-        //         });
         
         await axios.post('http://127.0.0.1:3000/api/tasks', task)
                     .then((response) => {
@@ -51,19 +39,6 @@ const TodoContainer = () =>{
                 })
                 .catch((err) => console.log(err));
     }
-
-    // React.useEffect( async () => {
-    //     await fetch('http://127.0.0.1:3000/api/tasks')
-    //     .then(response => {
-    //         if(response.ok)
-    //         return response.json();
-    //         else 
-    //         throw response;
-    //     })
-    //     .then(data => {
-    //         setTodos(data.data);
-    //         });
-    // }, []);
 
     const getTasks = async () => {
         await axios.get('http://127.0.0.1:3000/api/tasks')
