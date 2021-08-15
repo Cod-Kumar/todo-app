@@ -7,8 +7,6 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 
 const Todolist = ({ todo, deleteHandler }) =>{
     
-    
-
     return(
         <div className="col-lg-12">
             <form action="" className="todo-list-con">
